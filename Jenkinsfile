@@ -1,9 +1,23 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent any
+    options {
+        timestamps()
+    }
     stages {
-        stage('build') {
+        stage('folder1') {
+            when {
+                changeset "folder1/**"
+            }
             steps {
-                sh 'python --version'
+                build 'folder1'
+            }
+        }
+        stage('folder2') {
+            when {
+                changeset "folder2/**"
+            }
+            steps {
+                build 'folder2'
             }
         }
     }
